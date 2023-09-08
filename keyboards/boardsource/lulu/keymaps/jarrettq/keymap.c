@@ -15,6 +15,8 @@ enum layers {
 #define V_PASTE LT(0, KC_V)
 #define X_CUTT LT(0, KC_X)
 #define T_TAB LT(0, KC_T)
+#define S_LEFT LCTL(LSFT(KC_LEFT))
+#define S_RIGHT LCTL(LSFT(KC_RIGHT))
 
 // Helper for implementing tap vs. long-press keys. Given a tap-hold
 // key event, replaces the hold function with `long_press_keycode`.
@@ -49,18 +51,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
-
-enum combos {
-  SEL_LEFT,
-  SEL_RIGHT
-};
-
-const uint16_t PROGMEM sel_left[] = {KC_LCTL, LOWER, KC_LEFT, COMBO_END};
-const uint16_t PROGMEM sel_right[] = {KC_LCTL, LOWER, KC_RIGHT, COMBO_END};
-combo_t key_combos[] = {
-    [SEL_LEFT] = COMBO(sel_left, LCTL(LSFT(KC_LEFT))),
-    [SEL_RIGHT] = COMBO(sel_right, LCTL(LSFT(KC_RIGHT))), // keycodes with modifiers are possible too!
-};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  
@@ -103,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT(
   KC_GRV,    KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,                                          KC_F6,    KC_F7,  KC_F8, KC_F9, KC_F10,  KC_F11,
   _______, _______, _______,   KC_UP, _______,_______,                                          _______,  KC_7,   KC_8,  KC_9,  KC_F11,  KC_F12,
-  KC_DEL, _______,  KC_LEFT, KC_DOWN, KC_RIGHT,_______,                                         KC_CIRC,  KC_4,   KC_5,  KC_6,  KC_EQL, KC_TILD,
+  KC_DEL,   S_LEFT, KC_LEFT, KC_DOWN, KC_RIGHT, S_LEFT,                                         KC_CIRC,  KC_4,   KC_5,  KC_6,  KC_EQL, KC_TILD,
   _______, _______, _______, _______, _______, _______, LCTL(LALT(KC_S)), LCTL(LALT(KC_F11)), _______,  KC_1,   KC_2,  KC_3,  KC_MINS, KC_PIPE,
                              KC_CAPS, _______, _______, _______,                              _______,  _______, KC_0, _______
 ),

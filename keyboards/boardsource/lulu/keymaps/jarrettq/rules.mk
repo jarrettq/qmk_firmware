@@ -1,4 +1,5 @@
 VIA_ENABLE = yes
+COMBO_ENABLE = yes
 
 ifeq ($(strip $(MCU)), atmega32u4)
     QMK_SETTINGS = no

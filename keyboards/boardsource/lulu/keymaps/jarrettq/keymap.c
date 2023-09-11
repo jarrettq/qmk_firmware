@@ -15,8 +15,8 @@ enum layers {
 #define V_PASTE LT(0, KC_V)
 #define X_CUTT LT(0, KC_X)
 #define T_TAB LT(0, KC_T)
-#define S_LEFT LCTL(LSFT(KC_LEFT))
-#define S_RIGHT LCTL(LSFT(KC_RIGHT))
+#define S_LEFT LCTL(KC_LEFT) //selects text blocks to the left
+#define S_RIGHT LCTL(KC_RIGHT) //selects text blocks to the right 
 
 // Helper for implementing tap vs. long-press keys. Given a tap-hold
 // key event, replaces the hold function with `long_press_keycode`.
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |  UP  |      |      |                    |      |   7  |   8  |  9   |      | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  Del |      | LEFT | DOWN |RIGHT |      |-------.    ,-------|   ^  |   4  |   5  |   6  |   +  |   -  |
+ * |  Del |S_LEFT| LEFT | DOWN |RIGHT |S_RIGH|-------.    ,-------|   ^  |   4  |   5  |   6  |   +  |   -  |
  * |------+------+------+------+------+------|Replay |    | AuxOut|------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |   1  |   2  |   3  |   -  |   |  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT(
   KC_GRV,    KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,                                          KC_F6,    KC_F7,  KC_F8, KC_F9, KC_F10,  KC_F11,
   _______, _______, _______,   KC_UP, _______,_______,                                          _______,  KC_7,   KC_8,  KC_9,  KC_F11,  KC_F12,
-  KC_DEL,   S_LEFT, KC_LEFT, KC_DOWN, KC_RIGHT, S_LEFT,                                         KC_CIRC,  KC_4,   KC_5,  KC_6,  KC_EQL, KC_TILD,
+  KC_DEL,   S_LEFT, KC_LEFT, KC_DOWN, KC_RIGHT,S_RIGHT,                                         KC_CIRC,  KC_4,   KC_5,  KC_6,  KC_EQL, KC_TILD,
   _______, _______, _______, _______, _______, _______, LCTL(LALT(KC_S)), LCTL(LALT(KC_F11)), _______,  KC_1,   KC_2,  KC_3,  KC_MINS, KC_PIPE,
                              KC_CAPS, _______, _______, _______,                              _______,  _______, KC_0, _______
 ),
@@ -104,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Up  |Right |      |
- * |------+------+------+------+------+------|RGB_TOG|    |    ]  |------+------+------+------+------+------|
+ * |------+------+------+------+------+------|TG(ADJ)|    |    ]  |------+------+------+------+------+------|
  * |  F7  |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   RGB_MOD, RGB_RMOD,RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD,                     _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
-  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   RGB_TOG, _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
+  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,TG(_ADJUST), _______,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 /* ADJUST
@@ -132,17 +132,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
- */
+
   [_ADJUST] = LAYOUT(
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX,    KC_W, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX,    KC_A,    KC_S,    KC_D, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, _______, _______,  _______, _______, _______
-  )
+  )*/
+
+/* ADJUST
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |  w   |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |  A   |  S   |  D   |      |      |-------.    ,-------|      |      |RGB ON| HUE+ | SAT+ | VAL+ |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |-------|    |-------|      |      | MODE | HUE- | SAT- | VAL- |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   `----------------------------'           '------''--------------------'
+ */
+ [_ADJUST] = LAYOUT(
+  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
+  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+  KC_LCTL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_LALT, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
+                          KC_LALT,    KC_LGUI, LOWER, KC_SPC,  KC_ENT,   RAISE,   KC_BSPC, KC_RGUI
+)
 };
+
+
 
 layer_state_t layer_state_set_user(layer_state_t state) {
    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 };
-

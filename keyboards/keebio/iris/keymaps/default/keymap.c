@@ -8,6 +8,8 @@
 #define _RAISE 2
 #define _ADJUST 3
 
+// testing a change
+
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,

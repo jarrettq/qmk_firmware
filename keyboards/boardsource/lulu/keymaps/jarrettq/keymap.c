@@ -3,11 +3,22 @@
 
 #include QMK_KEYBOARD_H
 
+extern uint8_t is_master;
+
+/*
 enum layers {
     _COLEMAK,
     _GAME,
     _RAISE,
     _LOWER
+};
+*/
+
+enum layer_number {
+  _COLEMAK = 0,
+  _GAME = 1,
+  _LOWER = 2,
+  _RAISE = 3
 };
 
 //define some tap-hold key names
@@ -21,6 +32,17 @@ enum layers {
 #define S_RIGHT LCTL(KC_RIGHT) //selects text blocks to the right 
 #define REPLAY LCTL(LALT(KC_S)) //save a replay (via Radeon reLive)
 #define AVOUT LCTL(LALT(KC_F11)) //change audio out between soundbar and headphones (via SoundSwitch)
+#define CT_SP LCTL_T(KC_SPACE) //mod tap to act as control when held, space when tapped
+
+//setting a shorter trigger on when control is registered rather than space, as I tend to quick-hit those keys
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LCTL_T(KC_SPACE):
+      return 50;
+    default:
+      return TAPPING_TERM;
+  }
+}
 
 // Helper for implementing tap vs. long-press keys. Given a tap-hold
 // key event, replaces the hold function with `long_press_keycode`.
@@ -69,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |BackSP|   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |RShift|
+ * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  | BSLS |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LGUI |LOWER | /LCtrl  /       \Space \  |SHIFT |ENTER | RAISE|
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -80,29 +102,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,  KC_1,   KC_2,   KC_3,  KC_4,    KC_5,                        KC_6,   KC_7,    KC_8,   KC_9,    KC_0, KC_BSPC,
   KC_TAB,  KC_Q,   KC_W,   KC_F,  KC_P,    KC_B,                        KC_J,   KC_L,    KC_U,   KC_Y, KC_SCLN,  KC_DEL,
   KC_BSPC, KC_A,   KC_R,   KC_S, T_TAB,    KC_G,                        KC_M,   KC_N,    KC_E,   KC_I,    KC_O, KC_QUOT,
-  KC_LSFT, KC_Z, X_CUTT, C_COPY,  KC_D, V_PASTE,  KC_LBRC,  KC_RBRC,    KC_K,   KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-                        KC_LALT,  KC_LGUI, LOWER, KC_LCTL,   KC_SPC, KC_LSFT, KC_ENT,   RAISE
+  KC_LSFT, KC_Z, X_CUTT, C_COPY,  KC_D, V_PASTE,  KC_LBRC,  KC_RBRC,    KC_K,   KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
+                        KC_LALT,  KC_LGUI, LOWER,   CT_SP,   KC_SPC, KC_LSFT, KC_ENT,   RAISE
 ),
 /* GAME
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
+ * | Tab  |  Tab |   Q  |   W  |   E  |   R  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | CAPS |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * | BSPC |   A  |   A  |   S  |   D  |   F  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  | LALT |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * |LShift| LEFT |   Z  |   X  |   C  | LALT |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   |LOWER | LEFT |RIGHT | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
  [_GAME] = LAYOUT(
-  KC_ESC,       KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,   KC_9,    KC_0, KC_BSPC,
-  KC_TAB,       KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,   KC_O,    KC_P, KC_MINS,
-  KC_CAPS_LOCK, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,   KC_L, KC_SCLN, KC_QUOT,
-  KC_LSFT,      KC_Z,   KC_X,    KC_C,    KC_V, KC_LALT, KC_LBRC, KC_RBRC,    KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-                              KC_LALT, KC_LGUI,   LOWER, KC_LCTL,  KC_SPC, KC_LSFT,  KC_ENT, RAISE
+  KC_ESC,     KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,   KC_9,    KC_0, KC_BSPC,
+  KC_TAB,   KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,                      KC_Y,    KC_U,    KC_I,   KC_O,    KC_P, KC_MINS,
+  KC_BSPC,    KC_A,   KC_A,    KC_S,    KC_D,    KC_F,                      KC_H,    KC_J,    KC_K,   KC_L, KC_SCLN, KC_QUOT,
+  KC_LSFT, KC_LEFT,   KC_X,    KC_C,    KC_V, KC_LALT, KC_LBRC, KC_RBRC,    KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+                              LOWER, KC_LEFT, KC_RIGHT, KC_SPC,  KC_SPC, KC_LSFT,  KC_ENT, RAISE
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -407,7 +429,7 @@ void process_layer_state(void) {
     }
 }*/
 
-/*
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         switch (get_highest_layer(layer_state)) {
@@ -425,8 +447,8 @@ bool oled_task_user(void) {
         };        
     }
     return false;
-*/
-
+}
+/*
 bool oled_task_user(void){
   switch (get_highest_layer(layer_state)) {
     case _GAME:
@@ -446,4 +468,5 @@ bool oled_task_user(void){
   }
   return false;
 }
+*/
 #endif

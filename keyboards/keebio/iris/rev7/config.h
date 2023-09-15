@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SPLIT_HAND_PIN D5
 
-#    define RGBLIGHT_DEFAULT_VAL 120
-#    define RGBLIGHT_DEFAULT_MODE (RGBLIGHT_MODE_RAINBOW_SWIRL + 2)
+#    define RGBLIGHT_DEFAULT_VAL 180
+#    define RGBLIGHT_DEFAULT_MODE (RGBLIGHT_MODE_PLAIN + 2)
 // RGB Matrix
 //#    ifdef RGB_MATRIX_ENABLE
 #        define ENABLE_RGB_MATRIX_ALPHAS_MODS

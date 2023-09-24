@@ -5,7 +5,7 @@
     "features": {
         "extrakey": true,
         "mousekey": true,
-        "rgb_matrix": true
+        "rgb_matrix": false
     },
     "encoder": {
         "enabled": true,

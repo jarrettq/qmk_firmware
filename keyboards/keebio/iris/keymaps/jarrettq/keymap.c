@@ -3,21 +3,31 @@
 
 #include QMK_KEYBOARD_H
 
+/*
 enum layer_number {
   _COLEMAK = 0,
   _ADJUST = 1,
   _LOWER = 2,
   _RAISE = 3
 };
+*/
+
+enum layer_names {
+  _COLEMAK,
+  _LOWER,
+  _RAISE
+};
 
 #define ENT_R LT(2,KC_ENT)
 
+/*
 enum custom_keycodes {
   COLEMAK = SAFE_RANGE,
   LOWER,
   RAISE,
   ADJUST,
 };
+*/
 
 //define some tap-hold key names
 #define C_COPY LT(0, KC_C)
@@ -104,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
-  ),
+  )/*,
 
   [_ADJUST] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
@@ -118,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
-  )
+  )*/
 };
 
 /*
@@ -160,4 +170,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     }
   return true;
-}*/
+}
+*/

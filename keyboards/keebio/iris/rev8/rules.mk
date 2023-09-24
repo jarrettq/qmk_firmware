@@ -1,2 +1,2 @@
 SERIAL_DRIVER = vendor
-VIA_ENABLE = yes
+VIA_ENABLE = no

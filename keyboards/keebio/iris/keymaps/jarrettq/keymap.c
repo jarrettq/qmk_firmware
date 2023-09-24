@@ -3,43 +3,27 @@
 
 #include QMK_KEYBOARD_H
 
-/*
-enum layer_number {
-  _COLEMAK = 0,
-  _ADJUST = 1,
-  _LOWER = 2,
-  _RAISE = 3
-};
-*/
-
 enum layer_names {
   _COLEMAK,
   _LOWER,
   _RAISE
 };
 
+#define TAPPING_TOGGLE 2
+
 #define ENT_R LT(2,KC_ENT)
-
-/*
-enum custom_keycodes {
-  COLEMAK = SAFE_RANGE,
-  LOWER,
-  RAISE,
-  ADJUST,
-};
-*/
-
-//define some tap-hold key names
-#define C_COPY LT(0, KC_C)
-#define V_PASTE LT(0, KC_V)
-#define X_CUTT LT(0, KC_X)
-#define T_TAB LT(0, KC_T)
+#define CTL_T LCTL_T(KC_T) //mod-tap ctrl for left hand
+#define ALT_S LALT_T(KC_S) //mod-tap alt for left hand
+#define GUI_R LGUI_T(KC_R) //mod-tap windows for left hand
+#define CTL_N RCTL_T(KC_N) //mod-tap ctrl for right hand
+#define ALT_E RALT_T(KC_E) //mod-tap alt for right hand
+#define GUI_I RGUI_T(KC_I) //mod-tap windows for right hand
 
 //define some tiny macros
 #define S_LEFT LCTL(KC_LEFT) //selects text blocks to the left
 #define S_RIGHT LCTL(KC_RIGHT) //selects text blocks to the right
-#define REPLAY LCTL(LALT(KC_S)) //save a replay (via Radeon reLive)
-#define AVOUT LCTL(LALT(KC_F11)) //change audio out between soundbar and headphones (via SoundSwitch)
+// #define REPLAY LCTL(LALT(KC_S)) //save a replay (via Radeon reLive)
+// #define AVOUT LCTL(LALT(KC_F11)) //change audio out between soundbar and headphones (via SoundSwitch)
 #define CT_SP LCTL_T(KC_SPACE) //mod tap to act as control when held, space when tapped
 
  //setting a shorter trigger on when control is registered rather than space, as I tend to quick-hit those keys
@@ -52,26 +36,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
-/*
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  switch (keycode) {
-    case C_COPY:  // C on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, C(KC_C));
-
-    case V_PASTE:  // V on tap, Ctrl+V on long press.
-      return process_tap_or_long_press_key(record, C(KC_V));
-
-    case X_CUTT:  // X on tap, next song on long press.
-      return process_tap_or_long_press_key(record, C(KC_X));
-
-    case T_TAB:  // T on tap, new tab on long press.
-      return process_tap_or_long_press_key(record, C(KC_T));
-  }
-
-  return true;
-}
-*/
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK] = LAYOUT(
@@ -80,11 +44,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_BSPC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                               KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+     KC_BSPC, KC_A,    GUI_R,   ALT_S,   CTL_T,   KC_G,                               KC_M,    CTL_N,   ALT_E,   GUI_I,   KC_O,    KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_LALT,          KC_NO,   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI,  MO(1),   CT_SP,                    KC_SPC,  KC_RSFT,   ENT_R
+                                    KC_LGUI,  TT(1),   CT_SP,                    KC_SPC,  KC_RSFT,   ENT_R
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -130,45 +94,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )*/
 };
-
-/*
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case ADJUST:
-      if (record->event.pressed) {
-        layer_on(_ADJUST);
-      } else {
-        layer_off(_ADJUST);
-      }
-      return false;
-      break;
-    }
-  return true;
-}
-*/

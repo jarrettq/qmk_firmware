@@ -3,5 +3,5 @@
 
 #pragma once
 #define RGB_MATRIX_LED_COUNT 70
-#define TAPPING_TERM 200
+#define TAPPING_TERM 300
 #define TAPPING_TERM_PER_KEY

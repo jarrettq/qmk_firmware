@@ -25,12 +25,12 @@ enum layer_number {
 #define C_COPY LT(0, KC_C)
 #define V_PASTE LT(0, KC_V)
 #define X_CUTT LT(0, KC_X)
-#define CTLRT LCTL_T(KC_T) //mod-tap ctrl for left hand
-#define ALT_S LALT_T(KC_S) //mod-tap alt for left hand
-#define GUI_R LGUI_T(KC_R) //mod-tap windows for left hand
-#define CTL_N RCTL_T(KC_N) //mod-tap ctrl for right hand
-#define ALT_E RALT_T(KC_E) //mod-tap alt for right hand
-#define GUI_I RGUI_T(KC_I) //mod-tap windows for right hand
+#define CTL_P LCTL_T(KC_P) //mod-tap ctrl for left hand
+#define ALT_F LALT_T(KC_F) //mod-tap alt for left hand
+#define GUI_W LGUI_T(KC_W) //mod-tap windows for left hand
+#define CTL_L RCTL_T(KC_L) //mod-tap ctrl for right hand
+#define ALT_U RALT_T(KC_U) //mod-tap alt for right hand
+#define GUI_Y RGUI_T(KC_Y) //mod-tap windows for right hand
 
 //define some tiny macros
 #define S_LEFT LCTL(KC_LEFT) //selects text blocks to the left
@@ -43,7 +43,7 @@ enum layer_number {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LCTL_T(KC_SPACE):
-      return 50;
+      return 100;
     default:
       return TAPPING_TERM;
   }
@@ -72,9 +72,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case X_CUTT:  // X on tap, next song on long press.
       return process_tap_or_long_press_key(record, C(KC_X));
-
-    case T_TAB:  // T on tap, new tab on long press.
-      return process_tap_or_long_press_key(record, C(KC_T));
   }
 
   return true;
@@ -92,9 +89,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ,----------------------------------------------.                     ,--------------------------------------------------.
     KC_ESC,  KC_1,   KC_2,   KC_3,  KC_4,    KC_5,                        KC_6,   KC_7,    KC_8,   KC_9,  KC_0,    KC_BSPC,
 // |-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+---------+--------|
-    KC_TAB,  KC_Q,   KC_W,   KC_F,  KC_P,    KC_B,                        KC_J,   KC_L,    KC_U,   KC_Y,  KC_SCLN, KC_DEL,
+    KC_TAB,  KC_Q,   GUI_W,  ALT_F, CTL_P,    KC_B,                        KC_J,  CTL_L,   ALT_U,  GUI_Y,  KC_SCLN, KC_DEL,
 // |-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+---------+--------|
-    KC_BSPC, KC_A,   GUI_R,  ALT_S, CTLRT,   KC_G,                        KC_M,   CTL_N,   ALT_E,  GUI_I, KC_O,    KC_QUOT,
+    KC_BSPC, KC_A,   GUI_R,  ALT_S, CTLRT,   KC_G,                        KC_M,     KC_N,   KC_E,   KC_I,   KC_O,  KC_QUOT,
 // |-------+-------+-------+-------+-------+-------|        |   |       |-------+-------+-------+-------+---------+--------|
     KC_LSFT, KC_Z, X_CUTT, C_COPY,  KC_D, V_PASTE,  KC_LBRC,     KC_RBRC, KC_K,   KC_H,  KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
 // `-----------------------------------------------/       /     \       \------------------------------------------------'
@@ -119,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // |-------+-------+-------+-------+-------+-------|                    |-------+-------+-------+-------+---------+--------|
     KC_BSPC, KC_A,    KC_A,  KC_S,   KC_D,   KC_F,                        KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN, KC_QUOT,
 // |-------+-------+-------+-------+-------+-------|        |   |       |-------+-------+-------+-------+---------+--------|
-    KC_LSFT, KC_LEFT, KC_Z,  KC_X,   KC_C, KC_LALT, KC_LBRC,     KC_RBRC, KC_N,   KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+    KC_LSFT, KC_LEFT, KC_Z,  KC_X,   KC_C, KC_LALT, REPLAY,     KC_RBRC, KC_N,   KC_M,  KC_COMM, KC_DOT, KC_SLSH, KC_UP,
 // `-----------------------------------------------/       /     \       \------------------------------------------------'
                       LOWER, KC_LEFT, KC_RIGHT, KC_SPC,              KC_SPC,  KC_LSFT,  KC_ENT, RAISE
 //                  `--------+-------+-------+----------'           '--------+--------+-------+-------'
@@ -149,9 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT(
   KC_GRV,    KC_F1,   KC_F2,   KC_F3,    KC_F4,   KC_F5,                     KC_F6, KC_F7,   KC_F8, KC_F9,  KC_F10,  KC_F11,
-  _______, _______, _______,   KC_UP,  _______, _______,                   _______,  KC_7,    KC_8,  KC_9,  KC_F11,  KC_F12,
-  KC_DEL,   S_LEFT, KC_LEFT, KC_DOWN, KC_RIGHT, S_RIGHT,                   KC_CIRC,  KC_4,    KC_5,  KC_6,  KC_EQL, KC_TILD,
-  _______, _______, _______, _______,  _______, _______,  REPLAY,  AVOUT,  _______,  KC_1,    KC_2,  KC_3, KC_MINS, KC_PIPE,
+  _______, _______  , S_LEFT,   KC_UP,  S_RIGHT, _______,                   _______,  KC_7,    KC_8,  KC_9,  KC_F11,  KC_F12,
+  KC_DEL,   _______, KC_LEFT, KC_DOWN, KC_RIGHT, S(KC_9),                   S(KC_0),  KC_4,    KC_5,  KC_6,  KC_EQL, KC_TILD,
+  _______, _______, _______, _______,  _______, KC_LBRC, _______,  AVOUT,  KC_RBRC,  KC_1,    KC_2,  KC_3, KC_MINS, KC_PIPE,
                              KC_CAPS,  _______, _______, _______, _______, _______,  KC_0, _______
 ),
 /* RAISE
@@ -436,7 +433,7 @@ void process_layer_state(void) {
     }
 }*/
 
-
+/*
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         switch (get_highest_layer(layer_state)) {
@@ -455,7 +452,8 @@ bool oled_task_user(void) {
     }
     return false;
 }
-/*
+*/
+
 bool oled_task_user(void){
   switch (get_highest_layer(layer_state)) {
     case _GAME:
@@ -475,5 +473,5 @@ bool oled_task_user(void){
   }
   return false;
 }
-*/
+
 #endif

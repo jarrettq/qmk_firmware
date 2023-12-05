@@ -112,7 +112,9 @@
 
 #define UNICODE_LINUX E__NOTE(_E6), S__NOTE(_B5),
 
-#define TERMINAL_SOUND E__NOTE(_C5)
+#define ZELDA_PUZZLE Q__NOTE(_G5), Q__NOTE(_FS5), Q__NOTE(_DS5), Q__NOTE(_A4),Q__NOTE(_GS4), Q__NOTE(_E5), Q__NOTE(_GS5), HD_NOTE(_C6)
+
+#define TERMINAL_SOUND E__NOTE(_C5),
 
 /* Title:            La Campanella
  * Author/Composer:  Frank Lizst
@@ -148,7 +150,7 @@
  * Author/Composer:  Terrance Andrew Davis
  * License:          Public Domain
  */
-#define TOS_HYMN_RISEN H__NOTE(_D5), H__NOTE(_E5), HD_NOTE(_F5), HD_NOTE(_F5), H__NOTE(_F5), HD_NOTE(_D5), E__NOTE(_E5), E__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_D5), Q__NOTE(_D5), H__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_G5), Q__NOTE(_F5), H__NOTE(_D5), H__NOTE(_E5), HD_NOTE(_F5), HD_NOTE(_F5), H__NOTE(_F5), HD_NOTE(_D5), E__NOTE(_E5), E__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_D5), Q__NOTE(_D5), H__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_G5), Q__NOTE(_F5), H__NOTE(_D5), H__NOTE(_C5), W__NOTE(_D5), W__NOTE(_E5), Q__NOTE(_A4), H__NOTE(_A4), Q__NOTE(_E5), Q__NOTE(_E5), Q__NOTE(_F5), Q__NOTE(_E5), Q__NOTE(_D5), Q__NOTE(_G5), Q__NOTE(_B4), Q__NOTE(_D5), Q__NOTE(_C5), M__NOTE(_F5, 80), H__NOTE(_D5), H__NOTE(_C5), W__NOTE(_D5), W__NOTE(_E5), Q__NOTE(_A4), H__NOTE(_A4), Q__NOTE(_E5), Q__NOTE(_E5), Q__NOTE(_F5), Q__NOTE(_E5), Q__NOTE(_D5), Q__NOTE(_G5), Q__NOTE(_B4), Q__NOTE(_D5), Q__NOTE(_C5), M__NOTE(_F5, 80)
+#define TOS_HYMN_RISEN H__NOTE(_D5), H__NOTE(_E5), HD_NOTE(_F5), HD_NOTE(_F5), H__NOTE(_F5), HD_NOTE(_D5), E__NOTE(_E5), E__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_D5), Q__NOTE(_D5), H__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_G5), Q__NOTE(_F5), H__NOTE(_D5), H__NOTE(_E5), HD_NOTE(_F5), HD_NOTE(_F5), H__NOTE(_F5), HD_NOTE(_D5), E__NOTE(_E5), E__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_D5), Q__NOTE(_D5), H__NOTE(_E5), H__NOTE(_C5), Q__NOTE(_G5), Q__NOTE(_F5), H__NOTE(_D5), H__NOTE(_C5), W__NOTE(_D5), W__NOTE(_E5), Q__NOTE(_A4), H__NOTE(_A4), Q__NOTE(_E5), Q__NOTE(_E5), Q__NOTE(_F5), Q__NOTE(_E5), Q__NOTE(_D5), Q__NOTE(_G5), Q__NOTE(_B4), Q__NOTE(_D5), Q__NOTE(_C5), M__NOTE(_F5, 80), H__NOTE(_D5), H__NOTE(_C5), W__NOTE(_D5), W__NOTE(_E5), Q__NOTE(_A4), H__NOTE(_A4), Q__NOTE(_E5), Q__NOTE(_E5), Q__NOTE(_F5), Q__NOTE(_E5), Q__NOTE(_D5), Q__NOTE(_G5), Q__NOTE(_B4), Q__NOTE(_D5), Q__NOTE(_C5), M__NOTE(_F5)
 
 /* Removed sounds
  +   This list is here solely for compatibility, so that removed songs don't just break things
@@ -179,9 +181,6 @@
 #endif
 #ifndef SONIC_RING
 #    define SONIC_RING
-#endif
-#ifndef ZELDA_PUZZLE
-#    define ZELDA_PUZZLE
 #endif
 #ifndef ZELDA_TREASURE
 #    define ZELDA_TREASURE

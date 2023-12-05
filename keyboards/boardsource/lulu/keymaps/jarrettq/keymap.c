@@ -16,8 +16,9 @@ enum layers {
 
 enum layer_number {
   _COLEMAK = 0,
-  _LOWER = 1,
-  _RAISE = 2
+  _GAME = 1,
+  _LOWER = 2,
+  _RAISE = 3
 };
 
 //define some tap-hold key names
@@ -84,7 +85,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  
 /* COLEMAK DH
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   :  | Esc  |
+ * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |BackSP|
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   :  | Del  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |BackSP|   A  |   R  |   S  |   T  |   G  |-------.    ,-------|   M  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
@@ -96,13 +99,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
  [_COLEMAK] = LAYOUT(
-  KC_TAB,  KC_Q,   KC_W,   KC_F,  KC_P,    KC_B,                        KC_J,   KC_L,    KC_U,   KC_Y, KC_SCLN,  KC_ESC,
+  KC_ESC,  KC_1,   KC_2,   KC_3,  KC_4,    KC_5,                        KC_6,   KC_7,    KC_8,   KC_9,    KC_0, KC_BSPC,
+  KC_TAB,  KC_Q,   KC_W,   KC_F,  KC_P,    KC_B,                        KC_J,   KC_L,    KC_U,   KC_Y, KC_SCLN,  KC_DEL,
   KC_BSPC, KC_A,   KC_R,   KC_S, T_TAB,    KC_G,                        KC_M,   KC_N,    KC_E,   KC_I,    KC_O, KC_QUOT,
-  KC_LSFT, KC_Z, X_CUTT, C_COPY,  KC_D, V_PASTE,                        KC_K,   KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
-                                 KC_LGUI, LOWER,   CT_SP,   KC_SPC, KC_LSFT, KC_ENT,   RAISE
+  KC_LSFT, KC_Z, X_CUTT, C_COPY,  KC_D, V_PASTE,  KC_LBRC,  KC_RBRC,    KC_K,   KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_BSLS,
+                        KC_LALT,  KC_LGUI, LOWER,   CT_SP,   KC_SPC, KC_LSFT, KC_ENT,   RAISE
+),
+/* GAME
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |  Tab |   Q  |   W  |   E  |   R  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | BSPC |   A  |   A  |   S  |   D  |   F  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+ * |LShift| LEFT |   Z  |   X  |   C  | LALT |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *                   |LOWER | LEFT |RIGHT | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   `----------------------------'           '------''--------------------'
+ */
+ [_GAME] = LAYOUT(
+  KC_ESC,     KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,   KC_9,    KC_0, KC_BSPC,
+  KC_TAB,   KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,                      KC_Y,    KC_U,    KC_I,   KC_O,    KC_P, KC_MINS,
+  KC_BSPC,    KC_A,   KC_A,    KC_S,    KC_D,    KC_F,                      KC_H,    KC_J,    KC_K,   KC_L, KC_SCLN, KC_QUOT,
+  KC_LSFT, KC_LEFT,   KC_X,    KC_C,    KC_V, KC_LALT, KC_LBRC, KC_RBRC,    KC_N,    KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+                              LOWER, KC_LEFT, KC_RIGHT, KC_SPC,  KC_SPC, KC_LSFT,  KC_ENT, RAISE
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
+ * | GRV  |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |  UP  |      |      |                    |      |   7  |   8  |  9   |      | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  Del |S_LEFT| LEFT | DOWN |RIGHT |S_RIGH|-------.    ,-------|   ^  |   4  |   5  |   6  |   +  |   -  |
@@ -114,13 +141,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT(
+  KC_GRV,    KC_F1,   KC_F2,   KC_F3,    KC_F4,   KC_F5,                     KC_F6, KC_F7,   KC_F8, KC_F9,  KC_F10,  KC_F11,
   _______, _______, _______,   KC_UP,  _______, _______,                   _______,  KC_7,    KC_8,  KC_9,  KC_F11,  KC_F12,
   KC_DEL,   S_LEFT, KC_LEFT, KC_DOWN, KC_RIGHT, S_RIGHT,                   KC_CIRC,  KC_4,    KC_5,  KC_6,  KC_EQL, KC_TILD,
-  _______, _______, _______, _______,  _______, _______,                   _______,  KC_1,    KC_2,  KC_3, KC_MINS, KC_PIPE,
-                                       _______, _______, _______, _______, _______,  KC_0
+  _______, _______, _______, _______,  _______, _______,  REPLAY,  AVOUT,  _______,  KC_1,    KC_2,  KC_3, KC_MINS, KC_PIPE,
+                             KC_CAPS,  _______, _______, _______, _______, _______,  KC_0, _______
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |MOD   | MODR |  S+  |  S-  |  B+  |  B-  |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Up  |Right |      |
@@ -132,10 +162,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 [_RAISE] = LAYOUT(
+  RGB_MOD, RGB_RMOD,RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD,             _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                   KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,               XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
-  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,              KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-                                     _______, _______,  _______, _______,  _______, _______
+  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, GAME, CLMK,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
+                             _______, _______, _______,  _______, _______,  _______, _______, _______
 )
 };
 
@@ -191,7 +222,6 @@ void render_layer1_logo(void){
   oled_write_raw_P(layer_logo, sizeof(layer_logo));
 }
 */
-/*
 void render_layer1_logo(void){
     static const char PROGMEM layer_logo[] = {
     0xfe, 0xfe, 0xf8, 0xf0, 0xe0, 0xc0, 0xc2, 0x86, 0x86, 0x86, 0x86, 0x8e, 0x0e, 0x3e, 0xde, 0xdc, 
@@ -399,7 +429,7 @@ void process_layer_state(void) {
     }
 }*/
 
-/*
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         switch (get_highest_layer(layer_state)) {
@@ -418,7 +448,7 @@ bool oled_task_user(void) {
     }
     return false;
 }
-
+/*
 bool oled_task_user(void){
   switch (get_highest_layer(layer_state)) {
     case _GAME:
